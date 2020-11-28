@@ -1,0 +1,11 @@
+php_flag magic_quotes_gpc Off  // для авто экранирования мы будем экранировать сами внутри кода
+
+AddDefaultCharset utf-8 // кодировка по умолчанию
+
+DirectoryIndex index.php  // по умолчанию искать этот файл
+
+RewriteEngine on  //
+
+RewriteCond %{REQUEST_FILENAME} !-f  // если то что указал пользователь не файл перенаправляем на index.php
+
+RewriteRule ^(.*) index.php // если то что указал пользователь не файл перенаправляем на index.php
