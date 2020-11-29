@@ -4,6 +4,7 @@
 namespace core\base\controllers;
 
 use core\base\settings\Settings;
+use core\base\settings\ShopSettings;
 
 
 class RouteController
@@ -28,7 +29,8 @@ class RouteController
     {
   //        $arr = ['1','2','3','4'];
   //        print_arr($arr);
-            $s = Settings::_get('routes');
+            $s = Settings::instance();
+            $s1 = ShopSettings::instance();
             exit();
     }
 
