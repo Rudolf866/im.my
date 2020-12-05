@@ -53,6 +53,7 @@ class RouteController
             {
                 /*  админка  */
 
+
             } else{
                 $url = explode('/',substr($address_str,strlen(PATH)));
                 $hrUrl = $this->routes['user']['hrUrl'];

@@ -26,6 +26,7 @@ class Settings
             'hrUrl' => true,
             'routes' =>[
 
+
             ]
         ],
         'default' =>[
