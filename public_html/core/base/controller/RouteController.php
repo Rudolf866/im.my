@@ -127,8 +127,8 @@ class RouteController extends BaseController
         $route =[];
         if(!empty($arr[0]))
         {
-            if($this->routes[$var][$route][$arr[0]]){
-                $route = explode('/',$this->routes[$var][$route][$arr[0]]);
+            if($this->routes[$var]['routes'][$arr[0]]){
+                $route = explode('/',$this->routes[$var]['routes'][$arr[0]]);
                 $this->controller .= ucfirst($route[0].'Controller');
             } else{
                 $this->controller .= ucfirst($arr[0].'Controller');
