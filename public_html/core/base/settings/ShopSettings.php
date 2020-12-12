@@ -12,9 +12,12 @@ class ShopSettings extends Settings
     private $baseSettings;
 
     private $routes = [
-        'admin' =>[
-            'name' => 'sudo',
+        'plugins' =>[
+            'path' => 'core/plugins',
+            'hrUrl' => false,
+            'dir' => false
         ],
+
     ];
 
     private $templateArr = [
