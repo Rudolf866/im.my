@@ -43,9 +43,15 @@ abstract class BaseController
         $inputData = $args['inputMethod'];
         $outputData = $args['outputMethod'];
 
-        $this->$inputData();
+       $data = $this->$inputData();
 
-        $this->page = $this->$outputData();
+       if(method_exists($this,$outputData)) {
+
+           $page = $this->$outputData($data);
+           if($page) $this->page = $page;
+       } elseif($data){
+           $this->page = $data;
+       }
 
         if($this->errors){
             $this->writeLog();
@@ -68,6 +74,11 @@ abstract class BaseController
           return ob_get_clean();
       }
       protected function getPage(){
-        exit($this->page);
+        if(is_array($this->page)){
+            foreach ($this->page as $block) echo $block;
+        }else{
+            $this->page;
+        }
+        exit();
       }
 }
