@@ -11,8 +11,11 @@ class Settings
     private $routes = [
         'admin' =>[
             'alias' => 'admin',
-            'path' => 'core/admin/controllers/',
-            'hrUrl' => false
+            'path' => 'core/admin/controller/',
+            'hrUrl' => false,
+            'routes'=>[
+
+            ]
         ],
         'settings' =>[
             'path' => 'core/base/settings'
@@ -23,7 +26,7 @@ class Settings
             'dir' => false
         ],
         'user' =>[
-            'path' => 'core/user/controllers/',
+            'path' => 'core/user/controller/',
             'hrUrl' => true,
             'routes' =>[
 
@@ -47,7 +50,7 @@ class Settings
 
     }
 
-    static public function _get($property)
+    static public function get($property)
     {
         return self::instance()->$property;
     }

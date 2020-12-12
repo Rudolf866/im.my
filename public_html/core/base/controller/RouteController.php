@@ -1,21 +1,16 @@
 <?php
-
-
-namespace core\base\controllers;
+namespace core\base\controller;
 
 use core\base\exceptions\RouteException;
 use core\base\settings\Settings;
 use core\base\settings\ShopSettings;
 
 
-class RouteController
+class RouteController extends BaseController
 {
     static private $_instance;
     protected $routes;
-    protected $controller;
-    protected $inputMethod;
-    protected $outputMethod;
-    protected $parameters;
+
 
     private function __clone()
     {
@@ -47,18 +42,24 @@ class RouteController
 
         if($path === PATH)
         {
-            $this->routes == Settings::_get('routes');
-            if(!$this->routes) throw new RouteException('Сайт находиться на техническом обслуживание!');
-            if(strpos($address_str,$this->routes['admin']['alias']) === strlen(PATH))
+            $this->routes == Settings::get('routes');
+            if($this->routes) throw new RouteException('Сайт находиться на техническом обслуживание!');
+
+            $url = explode('/',substr($address_str,strlen(PATH)));
+
+           if($url[0] && $url[0] === $this->routes['admin']['alias'])
             {
                 /*  админка  */
-                $url = explode('/',substr($address_str,strlen(PATH . $this->routes['admin']['alias']) +1 ));
+                array_shift($url);
+
                 if($url[0] && is_dir($_SERVER['DOCUMENT_ROOT'] . PATH . $this->routes['plugins']['path'] . $url[0])){
 
                     $plugin = array_shift($url);
+
                     $pluginSettings = $this->routes['settings']['path'] . ucfirst($plugin . 'Settings');
 
                     if(file_exists($_SERVER['DOCUMENT_ROOT'] . PATH . $pluginSettings .'php')){
+
                         $pluginSettings = str_replace('/','\\',$pluginSettings);
                         $this->routes = $pluginSettings::get('routes');
                     }
@@ -77,7 +78,7 @@ class RouteController
                 }
 
             } else{
-                $url = explode('/',substr($address_str,strlen(PATH)));
+
                 $hrUrl = $this->routes['user']['hrUrl'];
                 $this->controller = $this->routes['user']['path'];
                 $route = 'user';
@@ -107,7 +108,7 @@ class RouteController
                 }
             }
 
-            exit();
+            //exit();
 
         } else {
             try {
@@ -136,6 +137,7 @@ class RouteController
         }
         $this->inputMethod = $route[1] ? $route[1] : $this->routes['default']['inputMethod'];
         $this->outputMethod = $route[2] ? $route[2] : $this->routes['default']['outputMethod'];
+
         return;
     }
 

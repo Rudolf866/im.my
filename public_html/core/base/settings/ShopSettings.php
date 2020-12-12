@@ -6,16 +6,18 @@ namespace core\base\settings;
 use core\base\settings\Settings;
 
 
-class ShopSettings extends Settings
+class ShopSettings
 {
     static private $_instance;
     private $baseSettings;
 
     private $routes = [
         'plugins' =>[
-            'path' => 'core/plugins',
-            'hrUrl' => false,
-            'dir' => false
+            'dir' => false,
+            'routes'=>[
+
+
+            ]
         ],
 
     ];
