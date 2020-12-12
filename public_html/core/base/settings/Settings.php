@@ -35,8 +35,8 @@ class Settings
         ],
         'default' =>[
             'controller' =>'IndexController',
-            'InputMethod' => 'InputData',
-            'OutputMethod' => 'OutputData'
+            'inputMethod' => 'inputData',
+            'outputMethod' => 'outputData'
         ]
     ];
 
@@ -77,7 +77,7 @@ class Settings
 
         foreach( $this as $name => $item)
         {
-            $property = $class::_get($name);
+            $property = $class::get($name);
 
             if(is_array($property) && is_array($item))
             {

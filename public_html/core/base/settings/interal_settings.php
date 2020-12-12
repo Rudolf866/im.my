@@ -2,6 +2,8 @@
 
 defined('VG_ACCESS') or die('Access danied');
 
+use core\base\exceptions\RouteException;
+
 const TEMPLATE ='templates/default/';
 const ADMIN_TEMPLATE = 'core/admin/views/';
 const COOKIE_VERSION = '1.0.0';
@@ -20,7 +22,7 @@ const USER_CSS_JS = [
     'scripts' =>[]
 ];
 
-use core\base\exceptions\RouteException;
+
 
 function autoloadMainClasses($class_name)
 {

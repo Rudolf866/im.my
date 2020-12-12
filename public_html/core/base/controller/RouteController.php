@@ -1,4 +1,5 @@
 <?php
+
 namespace core\base\controller;
 
 use core\base\exceptions\RouteException;
@@ -42,8 +43,8 @@ class RouteController extends BaseController
 
         if($path === PATH)
         {
-            $this->routes == Settings::get('routes');
-            if($this->routes) throw new RouteException('Сайт находиться на техническом обслуживание!');
+            $this->routes = Settings::get('routes');
+            if(!$this->routes) throw new RouteException('Сайт находиться на техническом обслуживание!');
 
             $url = explode('/',substr($address_str,strlen(PATH)));
 
@@ -64,7 +65,7 @@ class RouteController extends BaseController
                         $this->routes = $pluginSettings::get('routes');
                     }
 
-                    $dir = $this->routes['plugins']['dir'] ? '/' . $this->routes['plugins']['dir'] . '/' : '/';
+                     $dir = $this->routes['plugins']['dir'] ? '/' . $this->routes['plugins']['dir'] . '/' : '/';
                     $dir = str_replace('//','/',$dir);
                     $this->controller = $this->routes['plugins']['path'] . $plugin . $dir;
                     $hrUrl = $this->routes['plugins']['hrUrl'];
