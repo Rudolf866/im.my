@@ -10,8 +10,7 @@ class IndexController extends BaseController
 
     protected function inputData(){
 
-        $num = '1.5';
-        $this->clearNum($num);
+
         exit();
 
     }
