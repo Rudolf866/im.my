@@ -9,30 +9,12 @@ use core\base\settings\ShopSettings;
 
 class RouteController extends BaseController
 {
-    static private $_instance;
+    use Singleton;
     protected $routes;
-
-
-    private function __clone()
-    {
-
-    }
-
-    static public function getInstance()
-    {
-        if(self::$_instance instanceof self)
-        {
-            return self::$_instance;
-        }
-        return self::$_instance = new self;
-    }
 
     private function __construct()
     {
-  //        $arr = ['1','2','3','4'];
-  //        print_arr($arr);
-//            $s = Settings::instance();
-//            $s1 = ShopSettings::instance();
+
         $address_str = $_SERVER['REQUEST_URI'];
 
         if(strrpos($address_str,'/') === strlen($address_str) - 1 && strrpos($address_str,'/') !== 0)
