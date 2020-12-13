@@ -6,5 +6,5 @@ const PATH = '/';
 
 const HOST ='localhost';
 const USER ='root';
-const PASS ='';
-const DB_NAME = 'myphp_db';
+const PASS ='root';
+const DB_NAME = 'im';
