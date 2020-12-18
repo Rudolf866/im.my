@@ -85,7 +85,10 @@ class BaseModel
 
         $where = $this->createWhere($table,$set);
 
-        $join_arr = $this->createJoin($table, $set);
+        if(!$where) $new_where = true;
+            else $new_where = false;
+
+        $join_arr = $this->createJoin($table, $set, $new_where);
 
 
 
@@ -129,7 +132,7 @@ class BaseModel
 
     protected function createOrder($table = false, $set)
     {
-        //$set['fields'] = (is_array($set['fiels']) &&  !empty($set['fiels'] )) ? $set['fields'] : ['*'];
+        //$set['fields'] = (is_array($set['fields']) &&  !empty($set['fields'] )) ? $set['fields'] : ['*'];
 
         $table = $table ? $table . '.' : '';
 
@@ -155,7 +158,9 @@ class BaseModel
 
                     $order_directions = strtoupper($set['order_direction'] [$direct_count - 1] );
                 }
-                $order_by .= $table .$order . '  ' . $order_directions . ',';
+
+                if(is_int($order)) $order_by .= $order . '  ' . $order_directions . ',';
+                       else $order_by .= $table .$order . '  ' . $order_directions . ',';
             }
             $order_by = rtrim($order_by, ',');
         }
@@ -248,5 +253,9 @@ class BaseModel
         }
 
         return $where;
+    }
+
+    protected function createJoin($table, $set, $new_where = false){
+
     }
 }
