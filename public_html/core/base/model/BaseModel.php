@@ -111,7 +111,7 @@ class BaseModel
 
     protected function createFields($table = false, $set)
     {
-        $set['fields'] = (is_array($set['fiels']) &&  !empty($set['fiels'] )) ? $set['fields'] : ['*'];
+        $set['fields'] = (is_array($set['fields']) &&  !empty($set['fields'] )) ? $set['fields'] : ['*'];
 
         $table = $table ? $table . '.' : '';
 
@@ -139,7 +139,7 @@ class BaseModel
 
             $set['order_direction'] = (is_array($set['order_direction']) &&  !empty($set['order_direction'] )) ? $set['order_direction'] : ['ASC'];
 
-            $order_by = 'ORDER BY';
+            $order_by = 'ORDER BY ';
 
             $direct_count = 0;
 
@@ -155,7 +155,7 @@ class BaseModel
 
                     $order_directions = strtoupper($set['order_direction'] [$direct_count - 1] );
                 }
-                $order_by .= $table .$order . ' ' . $order_directions . ',';
+                $order_by .= $table .$order . '  ' . $order_directions . ',';
             }
             $order_by = rtrim($order_by, ',');
         }
@@ -215,11 +215,38 @@ class BaseModel
 
                     $where .= $table . $key . ' ' . $operand . ' (' . trim($in_str, ',') . ') ' . $condition;
 
-                    exit();
+
+                } elseif(strpos($operand,'LIKE') !== false){
+                    $like_template = explode('%',$operand);
+
+                    foreach($like_template as $lt_key=>$lt){
+
+                        if(!$lt){
+                            if(!$lt_key){
+
+                                $item =  '%' . $item;
+                            }else{
+                                $item .= '%';
+                            }
+                        }
+
+                    }
+                    $where .= $table . $key . ' LIKE ' . "'" . $item . "' $condition";
+
+                }else{
+
+                    if(strpos($item,'SELECT') === 0){
+
+                        $where .= $table . $key . $operand . ' (' . $item . ") $condition";
+                    }else{
+                        $where .= $table . $key . $operand . "'" . $item . "' $condition";
+                    }
                 }
             }
 
+            $where = substr( $where, 0, strrpos($where,$condition));
         }
 
+        return $where;
     }
 }
