@@ -17,6 +17,10 @@ class IndexController extends BaseController
 
         $files['gallery_img'] =['red.png','blue.png','black.png'];
         $files['img'] ='main_img.jpg';
+
+
+
+       // $_POST['name'] = 'Tom';
 //
 //        $c = json_encode($table);
 //
@@ -24,11 +28,11 @@ class IndexController extends BaseController
 //
 //        exit(print_arr(json_decode($c)));
 
-        $res = $db->add($table,[
-            'fields' => ['name' =>'Katay','content' =>'Hello','price'=>'120'],
-            'except' => ['name'],
-            'files' => $files
-        ]);
+//        $res = $db->add($table,[
+//            'fields' => ['name' =>'Katay','content' =>'Hello','price'=>'120'],
+//            'files' => $files
+//        ]);
+        $res = $db->showColumns($table);
 
 
         exit('id ='. $res['id'] . 'Name =' . $res['name']);
