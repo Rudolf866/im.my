@@ -15,13 +15,20 @@ class IndexController extends BaseController
 
         $table = 'article';
 
-        $color =['red','blue','black'];
+        $files['gallery_img'] =['red.png','blue.png','black.png'];
+        $files['img'] ='main_img.jpg';
+//
+//        $c = json_encode($table);
+//
+//        echo addslashes($c).'<br>';
+//
+//        exit(print_arr(json_decode($c)));
 
-        $res = $db->get($table,[
-            'fields' => ['id','name'],
-            'where' => ['name' =>"Rudik"],
-            'limit' => '1'
-        ])[0];
+        $res = $db->add($table,[
+            'fields' => ['name' =>'Katay','content' =>'Hello','price'=>'120'],
+            'except' => ['name'],
+            'files' => $files
+        ]);
 
 
         exit('id ='. $res['id'] . 'Name =' . $res['name']);
