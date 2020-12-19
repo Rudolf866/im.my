@@ -107,7 +107,7 @@ class BaseModel extends BaseModelMethods
 
         $where .= $join_arr['where'];
 
-        $fields = rtrim($fields,',');
+        $fields = rtrim($fields,", ");
 
 
 
@@ -131,7 +131,7 @@ class BaseModel extends BaseModelMethods
         $set['return_id'] = $set['return_id'] ? true : false;
         $set['except'] = (is_array($set['except']) && !empty($set['except']))  ? $set['except'] : false;
 
-        $insert_arr = $this ->createInsert($set['fields'], $set['files'],$set['except']);
+        $insert_arr = $this->createInsert($set['fields'], $set['files'],$set['except']);
 
         if($insert_arr){
 
@@ -154,7 +154,7 @@ class BaseModel extends BaseModelMethods
 
         if(!$set['all_rows']){
 
-            if(!$set['where']){
+            if($set['where']){
 
                 $where = $this->createWhere($set);
             }else{
@@ -174,7 +174,7 @@ class BaseModel extends BaseModelMethods
 
         $update = $this->createUpdate($set['fields'], $set['files'],$set['except']);
 
-        $query = "UPDATE $table SET $update $where";
+        $query = "UPDATE $table SET $update  $where";
 
         return $this->query($query, 'u');
 

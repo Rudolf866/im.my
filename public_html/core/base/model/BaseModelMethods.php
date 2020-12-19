@@ -6,6 +6,9 @@ namespace core\base\model;
 
  abstract class BaseModelMethods
 {
+
+    protected $sqlFunc = ['NOW()'];
+
     protected function createFields($set,$table = false)
     {
         $set['fields'] = (is_array($set['fields']) &&  !empty($set['fields'] )) ? $set['fields'] : ['*'];
@@ -72,7 +75,7 @@ namespace core\base\model;
         if(is_array($set['where']) &&  !empty($set['where'] )){
 
             $set['operand'] =  (is_array($set['operand']) &&  !empty($set['operand'] )) ? $set['operand'] : ['='];
-            $set[''] =  (is_array($set['operand']) &&  !empty($set['operand'] )) ? $set['operand'] : ['AND'];
+            $set['condition'] =  (is_array($set['condition']) &&  !empty($set['condition'] )) ? $set['condition'] : ['AND'];
 
             $where = $instruction;
 
@@ -103,7 +106,7 @@ namespace core\base\model;
                         $in_str = $item;
                     }else{
                         if(is_array($item)) $temp_item = $item;
-                        else $temp_item = explode(',',$item);
+                           else $temp_item = explode(',',$item);
 
                         $in_str = '';
 
@@ -164,7 +167,7 @@ namespace core\base\model;
 
                 if(is_int($key)){
                     if(!$item['table']) continue;
-                    else $key = $item['table'];
+                       else $key = $item['table'];
                 }
 
                 if($join) $join .= ' ';
@@ -228,15 +231,13 @@ namespace core\base\model;
 
        if($fields){
 
-           $sql_func = ['NOW()'];
-
            foreach($fields as $row => $value){
 
                if($except && in_array($row, $except)) continue;
 
                $insert_arr['fields'] .= $row .',';
 
-               if(in_array($value,$sql_func)){
+               if(in_array($value,$this->sqlFunc)){
 
                    $insert_arr['values'] .= $value .',';
                }else{
@@ -263,6 +264,42 @@ namespace core\base\model;
        return $insert_arr;
     }
 
+    protected function createUpdate($fields,$files,$except)
+    {
+        $update = '';
 
+        if($fields){
+
+            foreach($fields as $row =>$value){
+
+                if($except && in_array($row,$except)) continue;
+
+                $update .= $row . '=';
+
+                if(in_array($value,$this->sqlFunc)){
+                    $update .= $value . ',';
+                }else{
+                    $update .="'" . addslashes($value) . "',";
+                }
+            }
+
+        }
+
+        if($files){
+
+            foreach($files as  $row => $file){
+
+                $update .= $row . '=';
+
+                if(is_array($file)) $update .= "'" . addslashes(json_encode($file)) . "',  ";
+                     else $update .= "'" . addslashes($file) . "', ";
+
+
+            }
+        }
+
+        return rtrim($update, ", ");
+
+    }
 
 }

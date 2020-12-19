@@ -15,25 +15,16 @@ class IndexController extends BaseController
 
         $table = 'article';
 
-        $files['gallery_img'] =['red.png','blue.png','black.png'];
+        $files['gallery_img'] =['new_red.png'];
         $files['img'] ='main_img.jpg';
 
 
+        $_POST['id'] = 7;
+        $_POST['name'] = 'Oksana';
+        $_POST['content'] ="<p>New' book</p>";
+        $_POST['price'] = 1250;
 
-       // $_POST['name'] = 'Tom';
-//
-//        $c = json_encode($table);
-//
-//        echo addslashes($c).'<br>';
-//
-//        exit(print_arr(json_decode($c)));
-
-//        $res = $db->add($table,[
-//            'fields' => ['name' =>'Katay','content' =>'Hello','price'=>'120'],
-//            'files' => $files
-//        ]);
-        $res = $db->showColumns($table);
-
+        $res = $db->edit($table);
 
         exit('id ='. $res['id'] . 'Name =' . $res['name']);
     }
