@@ -157,6 +157,7 @@ namespace core\base\model;
         $fields = '';
         $join = '';
         $where ='';
+        $tables = '';
 
         if($set['join']){
 
@@ -204,6 +205,8 @@ namespace core\base\model;
 
                     $join_table = $key;
 
+                    $tables .= ', ' . trim($join_table);
+
                     if($new_where) {
 
 
@@ -221,7 +224,7 @@ namespace core\base\model;
                 }
             }
         }
-        return compact('fields','join','where');
+        return compact('fields','join','where','tables');
     }
 
    protected function createInsert($fields, $files,$except)
@@ -278,7 +281,11 @@ namespace core\base\model;
 
                 if(in_array($value,$this->sqlFunc)){
                     $update .= $value . ',';
-                }else{
+
+                }elseif($value === NULL){
+                    $update .= "NULL" . ',';
+                }
+                else{
                     $update .="'" . addslashes($value) . "',";
                 }
             }

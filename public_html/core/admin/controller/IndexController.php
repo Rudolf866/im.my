@@ -17,14 +17,16 @@ class IndexController extends BaseController
 
         $files['gallery_img'] =['new_red.png'];
         $files['img'] ='main_img.jpg';
+//
+//
+//        $_POST['id'] = 7;
+//        $_POST['name'] = 'Oksana';
+//        $_POST['content'] ="<p>New' book</p>";
+//        $_POST['price'] = 1250;
 
-
-        $_POST['id'] = 7;
-        $_POST['name'] = 'Oksana';
-        $_POST['content'] ="<p>New' book</p>";
-        $_POST['price'] = 1250;
-
-        $res = $db->edit($table);
+        $res = $db->delete($table, [
+                    'where' =>['id'=>3]
+            ]);
 
         exit('id ='. $res['id'] . 'Name =' . $res['name']);
     }
