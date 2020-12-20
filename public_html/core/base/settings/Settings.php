@@ -42,6 +42,7 @@ class Settings
         ]
     ];
 
+    private $defaultTable = 'article';
 
     static public function get($property)
     {
