@@ -95,15 +95,33 @@ abstract class BaseAdmin extends BaseController
                 }
             }
 
-            if($this->columns['parent_id']){
-
-                if(!in_array('parent_id',$fields)) $fields[] = 'parent_id';
-                $order[] = 'parent_id';
-
-            }
-
-            if($arr){
+            if($arr['fields']){
                 $fields = Settings::instance()->arrayMergeRecursive($fields,$arr['fields']);
+
+                if($this->columns['parent_id']){
+
+                    if(!in_array('parent_id',$fields)) $fields[] = 'parent_id';
+                    $order[] = 'parent_id';
+
+                }
+
+                if($this->columns['menu_position']) $order[] = 'menu_position';
+                    elseif($this->columns['date']){
+
+                        if($order) $order_direction = ['ASC','DESC'];
+                            else $order_direction[] = ['DESC'];
+
+                        $order[] = 'date';
+
+                    }
+                if($arr['order']) {
+                    $order = Settings::instance()->arrayMergeRecursive($order, $arr['order']);
+                }
+
+                if($arr['order_direction']) {
+                    $order_direction = Settings::instance()->arrayMergeRecursive($order_direction, $arr['order_direction']);
+                }
+
             }
 
         }else{
@@ -115,6 +133,16 @@ abstract class BaseAdmin extends BaseController
             $order_direction = ['order_direction'];
 
         }
+
+        $this->data = $this->model->get($this->table,[
+            'fields' => $fields,
+            'order' => $order,
+            'order_direction' => $order_direction
+
+
+        ]);
+
+        exit();
 
     }
 
